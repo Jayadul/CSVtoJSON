@@ -1,0 +1,19 @@
+{
+  "fields": [
+    {
+      "from": "id",
+      "to": "num",
+      "validationClass": "IsANumberValidation"
+    },
+    {
+      "from": "age",
+      "to": "years",
+      "validationClass": "AgeIsLessThan44Validation"
+    },
+    {
+      "from": "name",
+      "to": "Description",
+      "transformationClass": "SnakeCaseTransformation"
+    }
+  ]
+}

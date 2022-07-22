@@ -1,0 +1,60 @@
+Hi Jayadul,
+
+
+
+As discussed:
+
+
+
++ project conditions:
++ this is a test task.
++ you have 10 hours to do your best. Try to focus on the essential parts and leave the details.
++ you are also paid for researching.
++ all the hours must be logged using the Upwork logger.
++ try to apply the best practices to the project.
++ you will be paid for your work and not for the results.
++ projects requirements:
++ must be in .net 6, c#10, console app
++ operations:
++ input parameters:
+1. mapping.json (please see an attached example file, only assume its schema and not the values).
+2. test.csv (please see attached example file).
++ read the content of CSV (you cannot map to a data class, I can use several CSV structures).
++ using the mapping.json file, you convert the information coming from CSV into JSON.
++ you show the generated JSON in the terminal and save it on the name of the CSV file provided with the extension .json.
++ the validationClass and transformationClass should be implemented in the project.
++ testing:
++ I expect at least one xUnit test (all the code we write in the company has tests).
+
+
+
+Test case:
++ the CSV file has seven records with five fields.
++ the mapping.json file has three fields described.
++ the expected result is:
++ [ { "num": 1, "description": "My_name_is_1!", "years": 19 }, { "num": 2, "description": "", "years": 24 }, { "num": 3, "description": "My_name_i1", "years": 29 } ]
+
+
+
+Note: if the validation fails for one of the fields, the record is discarded.
+
+
+
+I hope you can pass the test.
+If yes, there are more exciting things to develop.
+
+
+
+Please invite me to the GitHub repo you will create for this task: miguel.goncalves.v@gmail.com.
+
+
+
+Regards,
+
+
+
+Miguel Goncalves
+
+Limit: 10 hrs/week
+
+View details
