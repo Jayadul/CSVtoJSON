@@ -1,6 +1,6 @@
 ﻿using Application;
 
-
-var TransformClass = new Transformation();
+var validation = new Validation();
+var TransformClass = new Transformation(validation);
 string result = TransformClass.Transform();
 Console.WriteLine(result);

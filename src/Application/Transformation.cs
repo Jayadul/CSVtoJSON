@@ -11,11 +11,18 @@ namespace Application
         string jsonFilePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\files", jsonFileName);
         #endregion
 
+        #region constructor
+        public Validation _validation;
+        public Transformation(Validation validation)
+        {
+            _validation = validation;
+        }
+        #region
+
         public string Transform()
         {
             string result = ConvertCsvFileToJsonObject(csvFilePath);
-            var validation = new Validation();
-            if (validation.FileExists(jsonFilePath))
+            if (_validation.FileExists(jsonFilePath))
             {
                 SaveJson(result, jsonFilePath);
             }
@@ -27,8 +34,8 @@ namespace Application
         /// </summary>
         /// <returns>JSON Object</returns>
         public string ConvertCsvFileToJsonObject(string path)
-        {
-            
+        {            
+            bool isValidObject;
             var csv = new List<string[]>();
             var lines = File.ReadAllLines(path);
 
@@ -45,6 +52,9 @@ namespace Application
                 for (int j = 0; j < properties.Length; j++)
                     objResult.Add(properties[j], csv[i][j]);
 
+                //if object is valid, add to the list
+                isValidObject = _validation.IsValidObject(objResult);
+                if(isValidObject)
                 listObjResult.Add(objResult);
             }
 
@@ -53,7 +63,7 @@ namespace Application
 
         
         /// <summary>
-        /// save json object to the given file path
+        /// Save json object to the given file path
         /// </summary>
         /// <param name="jsonResult"></param>
         /// <param name="filePath"></param>
