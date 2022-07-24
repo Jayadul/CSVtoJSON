@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application
+﻿namespace Application.services
 {
     public class Validation: IValidation
     {
@@ -28,25 +22,36 @@ namespace Application
         /// <returns></returns>
         public bool IsValidObject(IDictionary<string, string> objResult)
         {
+            bool isValid = true;
             //if any value of the object is null, return false
             bool containsNullValue = objResult.Values.Any(s => s == null);
             if(containsNullValue)
                 return false;
 
+            //ID validation; If ID is a number
             string Id;
-            bool hasIdValue = false;
+            objResult.TryGetValue("id", out Id);
+            var IdIsANumber = IsANumber(Id);
+            if(!IdIsANumber) return false;
 
-            //convert id is not int, return false
-            hasIdValue = objResult.TryGetValue("id", out Id);
-            try
-            {
-                Convert.ToInt32(Id);
-            }
-            catch (Exception)
-            {
-                return false;
-            }  
-            return true;
+            //Age validation; If Age is a number and less than 44
+            string Age;
+            objResult.TryGetValue("age", out Age);
+            var AgeIsANumber = IsANumber(Age);
+            if (AgeIsANumber) isValid = AgeIsLessThan44(Age);
+
+            return isValid;
+        }
+
+        private bool IsANumber(string value)
+        {
+            var isNumeric = int.TryParse(value, out int n);
+            return isNumeric;
+        }
+
+        private bool AgeIsLessThan44(string value)
+        {
+            return Convert.ToInt32(value) <44?true:false;
         }
     }
 }
