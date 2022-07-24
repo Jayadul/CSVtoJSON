@@ -5,10 +5,10 @@ namespace Application
     public class Transformation
     {
         #region global variables
-        static string csvFileName = "test.csv";
-        static string jsonFileName = "test.json";
-        string csvFilePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\files", csvFileName);
-        string jsonFilePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\files", jsonFileName);
+        static string filePath = Environment.CurrentDirectory + @"\..\..\..\files";
+        static string csvFileName = "test.csv";        
+        static string csvFilePath = Path.Combine(filePath, csvFileName);
+        static string jsonFilePath = Path.ChangeExtension(csvFilePath, ".json");
         #endregion
 
         #region constructor
@@ -17,15 +17,16 @@ namespace Application
         {
             _validation = validation;
         }
-        #region
+        #endregion
 
         public string Transform()
         {
             string result = ConvertCsvFileToJsonObject(csvFilePath);
-            if (_validation.FileExists(jsonFilePath))
+            if (!_validation.FileExists(jsonFilePath))
             {
-                SaveJson(result, jsonFilePath);
+                File.Create(jsonFilePath);
             }
+            SaveJson(result, jsonFilePath);
             return result;
         }
 
@@ -68,7 +69,7 @@ namespace Application
         /// <param name="jsonResult"></param>
         /// <param name="filePath"></param>
         public void SaveJson(string jsonResult,string filePath)
-        {
+        {            
             File.WriteAllText(filePath, jsonResult);
         }
     }
