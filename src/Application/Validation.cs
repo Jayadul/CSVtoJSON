@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-    public class Validation
+    public class Validation: IValidation
     {
         /// <summary>
         /// Check if the file exists where trying to save data

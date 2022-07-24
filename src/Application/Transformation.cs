@@ -12,8 +12,8 @@ namespace Application
         #endregion
 
         #region constructor
-        public Validation _validation;
-        public Transformation(Validation validation)
+        public IValidation _validation;
+        public Transformation(IValidation validation)
         {
             _validation = validation;
         }
@@ -22,11 +22,15 @@ namespace Application
         public string Transform()
         {
             string result = ConvertCsvFileToJsonObject(csvFilePath);
-            if (!_validation.FileExists(jsonFilePath))
-            {
-                File.Create(jsonFilePath);
-            }
-            SaveJson(result, jsonFilePath);
+
+            // Create the file and use streamWriter to write text to it.
+            //If the file existence is not check, this will overwrite said file.
+            //Use the using block so the file can close and vairable disposed correctly
+            if (!File.Exists(jsonFilePath))      
+                using (StreamWriter writer = File.CreateText(jsonFilePath)) { writer.Write(result); }
+            else
+                SaveJson(result, jsonFilePath);
+
             return result;
         }
 
