@@ -57,14 +57,19 @@ namespace Application
             for (int i = 1; i < lines.Length; i++)
             {
                 var objResult = new Dictionary<string, string>();
-                for (int j = 0; j < properties.Length; j++)
+                for (int j = 0; j < 3; j++)
                     objResult.Add(properties[j], csv[i][j]);
 
+                
                 //if object is valid, transform name and add to the list
                 isValidObject = _validation.IsValidObject(objResult);
                 if (isValidObject)
                 {
                     objResult["name"] = Transformation.ToSankeCase(objResult["name"]);
+                    Transformation.RenameKey(objResult, "id", "num");
+                    Transformation.RenameKey(objResult, "name", "description");
+                    Transformation.RenameKey(objResult, "age", "years");
+                    
                     listObjResult.Add(objResult);
                 }               
             }
